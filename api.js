@@ -41,6 +41,7 @@ export function registerUser({ login, password, name, imageUrl }) {
   });
 }
 
+//авторизация
 export function loginUser({ login, password }) {
   return fetch(baseHost + "/api/user/login", {
     method: "POST",
