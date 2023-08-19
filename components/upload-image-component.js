@@ -1,8 +1,7 @@
 import { uploadImage } from "../api.js";
-
+// Форма добавления фото
 export function renderUploadImageComponent({ element, onImageUrlChange }) {
   let imageUrl = "";
-
   const render = () => {
     element.innerHTML = `
   <div class="upload=image">
@@ -33,7 +32,7 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
 
     fileInputElement?.addEventListener("change", () => {
       const file = fileInputElement.files[0];
-      if (file) {
+      if (file ) {
         const lableEl = document.querySelector(".file-upload-label");
         lableEl.setAttribute("disabled", true);
         lableEl.textContent = "Загружаю файл...";

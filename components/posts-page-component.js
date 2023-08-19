@@ -7,21 +7,12 @@ import { sanitizeHtml } from "/sanitizeHTML.js";
 
 
 export function renderPostsPageComponent({ appEl }) {
-  // TODO: реализовать рендер постов из api
-  console.log("Актуальный список постов:", posts);
 
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
-
-
-
-
-
-
-
-
+//Обертка каждого поста
     const appHtml = posts
       .map((post) => {
         let likeIcon = post.isLiked
@@ -57,17 +48,18 @@ export function renderPostsPageComponent({ appEl }) {
                   </li>`;
       })
       .join("");
-
+// Обертка контейнера постов
   appEl.innerHTML = `
                <div class="page-container">
                  <div class="header-container"></div>
                  <ul class="posts">${appHtml}</ul>
                </div>`;
-
+//Отрисовка шапки
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
   });
-renderHeaderComponent;
+// Что-то странное
+// renderHeaderComponent;
   for (let userEl of document.querySelectorAll(".post-header")) {
     userEl.addEventListener("click", () => {
       goToPage(USER_POSTS_PAGE, {
