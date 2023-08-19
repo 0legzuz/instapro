@@ -1,7 +1,7 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
-
+import { sanitizeHtml } from "/sanitizeHTML.js";
 
 
 
@@ -27,9 +27,12 @@ export function renderPostsPageComponent({ appEl }) {
         let likeIcon = post.isLiked
           ? "./assets/images/like-active.svg"
           : "./assets/images/like-not-active.svg";
+
         return `<li class="post">
                     <div class="post-header" data-user-id='${post.id}'>
-                        <img src="${post.user.imageUrl}" class="post-header__user-image">
+                        <img src="${
+                          post.user.imageUrl
+                        }" class="post-header__user-image">
                         <p class="post-header__user-name">${post.user.name}</p>
                     </div>
                     <div class="post-image-container">
@@ -45,7 +48,8 @@ export function renderPostsPageComponent({ appEl }) {
                     </div>
                     <p class="post-text">
                       <span class="user-name">${post.user.name}</span>
-                      ${post.description}
+                       ${sanitizeHtml(post.description)}
+                      
                     </p>
                     <p class="post-date">
                       ${post.createdAt}
@@ -53,7 +57,6 @@ export function renderPostsPageComponent({ appEl }) {
                   </li>`;
       })
       .join("");
-
 
   appEl.innerHTML = `
                <div class="page-container">
