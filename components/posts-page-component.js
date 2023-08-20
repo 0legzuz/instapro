@@ -8,6 +8,7 @@ import { sanitizeHtml } from "/sanitizeHTML.js";
 
 export function renderPostsPageComponent({ appEl }) {
 
+
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
@@ -20,7 +21,7 @@ export function renderPostsPageComponent({ appEl }) {
           : "./assets/images/like-not-active.svg";
 
         return `<li class="post">
-                    <div class="post-header" data-user-id='${post.id}'>
+                    <div class="post-header" data-user-id='${post.user.id}'>
                         <img src="${
                           post.user.imageUrl
                         }" class="post-header__user-image">
@@ -62,6 +63,7 @@ export function renderPostsPageComponent({ appEl }) {
 // renderHeaderComponent;
   for (let userEl of document.querySelectorAll(".post-header")) {
     userEl.addEventListener("click", () => {
+      
       goToPage(USER_POSTS_PAGE, {
         userId: userEl.dataset.userId,
       });
