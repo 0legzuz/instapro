@@ -65,6 +65,7 @@ export function renderAuthPageComponent({ appEl, setUser }) {
     });
 
     const uploadImageContainer = appEl.querySelector(".upload-image-container");
+    console.log(uploadImageContainer);
 
 
     if (uploadImageContainer) {

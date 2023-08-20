@@ -75,8 +75,8 @@ export const goToPage = (newPage, data) => {
 
       return getUserPosts({ token: getToken(), id: data.userId })
         .then((newPosts) => {
-           posts = newPosts;
-          page = POSTS_PAGE;
+          posts = newPosts;
+          page = USER_POSTS_PAGE;
           renderApp();
         })
         .catch((error) => {
@@ -137,9 +137,22 @@ const renderApp = () => {
   }
 
   if (page === USER_POSTS_PAGE) {
-    // TODO: реализовать страницу фотографию пользвателя
-    appEl.innerHTML = "Здесь будет страница фотографий пользователя";
-    return;
+    renderPostsPageComponent({ appEl });
+    const headerContainer = document.querySelector(".header-container");
+  
+
+    headerContainer.insertAdjacentHTML(
+      "afterend",
+      ` <div class="posts-user-header">
+                  <img src="${posts[0].user.imageUrl}" class="posts-user-header__user-image">>
+                  <p class="posts-user-header__user-name">${posts[0].user.name}</p>
+                </div>`
+    ); 
+    const postHeaders = document.querySelectorAll('.post-header')
+    console.log(postHeaders);
+    for (const postHeader of postHeaders) {
+      postHeader.style.display = 'none';
+    }
   }
 };
 

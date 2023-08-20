@@ -52,7 +52,10 @@ export function renderPostsPageComponent({ appEl }) {
 // Обертка контейнера постов
   appEl.innerHTML = `
                <div class="page-container">
-                 <div class="header-container"></div>
+                <div class="header-container"></div>
+
+                
+
                  <ul class="posts">${appHtml}</ul>
                </div>`;
 //Отрисовка шапки
