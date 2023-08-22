@@ -1,4 +1,4 @@
-import { getPosts,getUserPosts, addPost } from "./api.js";
+import { getPosts, getUserPosts, addPost } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -15,16 +15,19 @@ import {
   removeUserFromLocalStorage,
   saveUserToLocalStorage,
 } from "./helpers.js";
+import { postsLikes } from "../likes.js";
 
 export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
 
 // Получение токена
-const getToken = () => {
+export const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
   return token;
 };
+
+
 
 // Выход из авторизованного окна
 export const logout = () => {
@@ -33,9 +36,8 @@ export const logout = () => {
   goToPage(POSTS_PAGE);
 };
 
-
 // Включение страницы приложения
- 
+
 export const goToPage = (newPage, data) => {
   if (
     [
@@ -61,6 +63,7 @@ export const goToPage = (newPage, data) => {
           page = POSTS_PAGE;
           posts = newPosts;
           renderApp();
+          postsLikes({ token: getToken() })
         })
         .catch((error) => {
           console.error(error);
@@ -94,7 +97,7 @@ export const goToPage = (newPage, data) => {
   throw new Error("страницы не существует");
 };
 
-const renderApp = () => {
+export const renderApp = () => {
   const appEl = document.getElementById("app");
   if (page === LOADING_PAGE) {
     return renderLoadingPageComponent({
@@ -120,40 +123,52 @@ const renderApp = () => {
   if (page === ADD_POSTS_PAGE) {
     return renderAddPostPageComponent({
       appEl,
-      onAddPostClick({ description, imageUrl  }) {
-        addPost({ description, imageUrl, token: getToken() }).then(
-          () => {
+      onAddPostClick({ description, imageUrl }) {
+        addPost({ description, imageUrl, token: getToken() }).then(() => {
           goToPage(POSTS_PAGE);
-          }
-        );
-        
-        
+        });
       },
     });
   }
 
   if (page === POSTS_PAGE) {
+
     renderPostsPageComponent({ appEl });
   }
 
   if (page === USER_POSTS_PAGE) {
     renderPostsPageComponent({ appEl });
     const headerContainer = document.querySelector(".header-container");
-  
 
     headerContainer.insertAdjacentHTML(
       "afterend",
       ` <div class="posts-user-header">
-                  <img src="${posts[0].user.imageUrl}" class="posts-user-header__user-image">>
-                  <p class="posts-user-header__user-name">${posts[0].user.name}</p>
+                  <img src="${posts[0].user.imageUrl}" class="posts-user-header__user-image">
+                  <p class="posts-user-header__user-name"> ${posts[0].user.name} </p>
                 </div>`
-    ); 
-    const postHeaders = document.querySelectorAll('.post-header')
-    console.log(postHeaders);
+    );
+    const postHeaders = document.querySelectorAll(".post-header");
+ 
     for (const postHeader of postHeaders) {
-      postHeader.style.display = 'none';
+      postHeader.style.display = "none";
     }
   }
 };
+
+
+export const renderLike = () => {
+
+  getPosts({ token: getToken() })
+        .then((newPosts) => {
+          posts = newPosts;
+          page = POSTS_PAGE;
+          renderApp();
+          postsLikes({ token: getToken() });
+        });
+  page=newPage;     
+  
+  return;
+};
+
 
 goToPage(POSTS_PAGE);

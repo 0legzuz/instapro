@@ -1,6 +1,6 @@
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
-const personalKey = "11";
+const personalKey = "32122";
 const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
@@ -13,6 +13,7 @@ export function getPosts({ token }) {
     },
   })
     .then((response) => {
+
       
       
       if (response.status === 401) {
@@ -72,7 +73,9 @@ export function uploadImage({ file }) {
     method: "POST",
     body: data,
   }).then((response) => {
-
+    if (response.status === 400) {
+      throw new Error("Сервер упал");
+    }
     return response.json();
     
   });
@@ -113,3 +116,29 @@ export function getUserPosts({ token, id }) {
       return data.posts;
     });
 }
+
+//Лайки
+export const likes = ({postId, token}) => {
+  return fetch(`${postsHost}/${postId}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+
+    return response.json();
+  });
+};
+
+//Дизлайки
+export const dislikes = ({postId, token}) => {
+  return fetch(`${postsHost}/${postId}/dislike`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+
+    return response.json();
+  });
+};

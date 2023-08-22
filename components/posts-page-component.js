@@ -6,6 +6,7 @@ import { sanitizeHtml } from "/sanitizeHTML.js";
 
 
 
+
 export function renderPostsPageComponent({ appEl }) {
 
 
@@ -14,11 +15,28 @@ export function renderPostsPageComponent({ appEl }) {
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
 //Обертка каждого поста
+
     const appHtml = posts
       .map((post) => {
         let likeIcon = post.isLiked
           ? "./assets/images/like-active.svg"
           : "./assets/images/like-not-active.svg";
+        
+        let likeCounter = "";
+
+        if (post.likes.length === 0) {
+          likeCounter = post.likes.length;
+        } else if (post.likes.length === 1) {
+          likeCounter = post.likes[0].name;
+        } else {
+          likeCounter = `${
+            post.likes[Math.floor(Math.random() * post.likes.length)].name
+          } и еще ${post.likes.length - 1}`;
+        }
+
+
+        
+      
 
         return `<li class="post">
                     <div class="post-header" data-user-id='${post.user.id}'>
@@ -31,11 +49,13 @@ export function renderPostsPageComponent({ appEl }) {
                       <img class="post-image" src="${post.imageUrl}">
                     </div>
                     <div class="post-likes">
-                      <button data-post-id="${post.id}" class="like-button">
+                      <button data-post-id="${post.id}" data-is-liked="${
+          post.isLiked
+        }" class="like-button">
                         <img src="${likeIcon}">
                       </button>
                       <p class="post-likes-text">
-                        Нравится: ${post.likes.length}
+                        Нравится: ${likeCounter}
                       </p>
                     </div>
                     <p class="post-text">
@@ -58,6 +78,7 @@ export function renderPostsPageComponent({ appEl }) {
 
                  <ul class="posts">${appHtml}</ul>
                </div>`;
+            
 //Отрисовка шапки
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
