@@ -81,6 +81,8 @@ export const goToPage = (newPage, data) => {
           posts = newPosts;
           page = USER_POSTS_PAGE;
           renderApp();
+          postsLikes({ token: getToken() });
+          
         })
         .catch((error) => {
           console.error(error);
@@ -147,6 +149,7 @@ export const renderApp = () => {
                   <p class="posts-user-header__user-name"> ${posts[0].user.name} </p>
                 </div>`
     );
+    
     const postHeaders = document.querySelectorAll(".post-header");
  
     for (const postHeader of postHeaders) {
@@ -161,7 +164,6 @@ export const renderLike = () => {
   getPosts({ token: getToken() })
         .then((newPosts) => {
           posts = newPosts;
-          page = POSTS_PAGE;
           renderApp();
           postsLikes({ token: getToken() });
         });

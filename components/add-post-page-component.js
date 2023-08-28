@@ -43,23 +43,27 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       `;
 
     appEl.innerHTML = appHtml;
+    const uploadImageContainer = document.querySelector(".upload-image-container")
     
     //Окно загрузки фото 
     renderUploadImageComponent({
-      element: appEl.querySelector(".upload-image-container"),
+      element: uploadImageContainer,
       onImageUrlChange(newImageUrl) {
         imageUrl = newImageUrl;
       }
     });
     const inputTextarea = document.querySelector(".input");
+    const fileInputElement = document.querySelector(".file-upload-input");
 
   
       document.getElementById("add-button").addEventListener("click", () => {
-        if (inputTextarea.value != "") {
+        if (inputTextarea.value != "" && fileInputElement.value != "") {
           onAddPostClick({
             description: `${inputTextarea.value}`,
             imageUrl: `${imageUrl}`,
           });
+        } else {
+          alert("Оба поля должны быть заполнены");
         }
       });
     
