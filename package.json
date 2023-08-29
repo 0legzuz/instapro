@@ -1,0 +1,33 @@
+{
+    "name": "instapro-main",
+    "version": "1.0.0",
+    "description": "MVP аналога популярной соц. сети для обмена фотографиями",
+    "main": "index.js",
+    "scripts": {
+        "dev": "webpack --mode development --watch",
+        "format": "prettier --write ./",
+        "lint:js": "eslint ./**/*.js",
+        "lint": "npm run lint:js",
+        "lint:css": "stylelint './**/*.{css,scss}'",
+        "prepare": "husky install",
+        "full": "npm run lint:css && lint:js && npm run format"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^8.47.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.0.0",
+        "husky": "^8.0.3",
+        "prettier": "^3.0.2",
+        "stylelint": "^15.10.3",
+        "stylelint-config-standard": "^34.0.0",
+        "stylelint-prettier": "^4.0.2",
+        "stylelint-scss": "^5.1.0",
+        "webpack": "^5.88.2",
+        "webpack-cli": "^5.1.4"
+    },
+    "dependencies": {
+        "date-fns": "^2.30.0"
+    }
+}

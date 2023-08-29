@@ -1,10 +1,10 @@
-import { renderUploadImageComponent } from "./upload-image-component.js";
+import { renderUploadImageComponent } from './upload-image-component.js';
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
-    let imageUrl = "";
-  const render = () => {
-    // TODO: Реализовать страницу добавления поста
-    const appHtml = `
+    let imageUrl = '';
+    const render = () => {
+        // TODO: Реализовать страницу добавления поста
+        const appHtml = `
         <div id="app">
         <div class="page-container">
           <div class="header-container">
@@ -42,32 +42,32 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       </div>
       `;
 
-    appEl.innerHTML = appHtml;
-    const uploadImageContainer = document.querySelector(".upload-image-container")
-    
-    //Окно загрузки фото 
-    renderUploadImageComponent({
-      element: uploadImageContainer,
-      onImageUrlChange(newImageUrl) {
-        imageUrl = newImageUrl;
-      }
-    });
-    const inputTextarea = document.querySelector(".input");
-    const fileInputElement = document.querySelector(".file-upload-input");
+        appEl.innerHTML = appHtml;
+        const uploadImageContainer = document.querySelector(
+            '.upload-image-container',
+        );
 
-  
-      document.getElementById("add-button").addEventListener("click", () => {
-        if (inputTextarea.value != "" && fileInputElement.value != "") {
-          onAddPostClick({
-            description: `${inputTextarea.value}`,
-            imageUrl: `${imageUrl}`,
-          });
-        } else {
-          alert("Оба поля должны быть заполнены");
-        }
-      });
-    
-  };
+        //Окно загрузки фото
+        renderUploadImageComponent({
+            element: uploadImageContainer,
+            onImageUrlChange(newImageUrl) {
+                imageUrl = newImageUrl;
+            },
+        });
+        const inputTextarea = document.querySelector('.input');
+        const fileInputElement = document.querySelector('.file-upload-input');
 
-  render();
+        document.getElementById('add-button').addEventListener('click', () => {
+            if (inputTextarea.value && fileInputElement.value) {
+                onAddPostClick({
+                    description: `${inputTextarea.value}`,
+                    imageUrl: `${imageUrl}`,
+                });
+            } else {
+                alert('Оба поля должны быть заполнены');
+            }
+        });
+    };
+
+    render();
 }

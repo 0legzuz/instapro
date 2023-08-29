@@ -1,0 +1,17 @@
+{
+    "extends": ["stylelint-config-standard", "stylelint-prettier/recommended"],
+    "plugins": ["stylelint-prettier", "stylelint-scss"],
+    "rules": {
+        "at-rule-no-unknown": null,
+        "scss/at-rule-no-unknown": true,
+        "prettier/prettier": true,
+        "font-family-no-missing-generic-family-keyword": [
+            true,
+            {
+                "ignoreFontFamilies": ["Stratos"]
+            }
+        ]
+    }
+}
+
+
